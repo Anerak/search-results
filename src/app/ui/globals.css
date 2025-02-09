@@ -13,18 +13,18 @@
 	--bg-btn-back: #3a3d4c;
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
 	:root {
 		--background: #0a0a0a;
 		--foreground: #ededed;
 	}
-}
+} */
 
 body {
 	color: var(--foreground);
 	background: var(--background);
 }
 
-.cruisebound-logo-text {
+.logo-text {
 	font-family: 'Rebond Grotesque', Arial, Helvetica, sans-serif;
 }

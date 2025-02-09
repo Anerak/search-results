@@ -1,12 +1,11 @@
-import Sidebar from "./sidebar/Sidebar";
+import SearchResults from "@/app/ui/results/SearchResults";
+import Sidebar from "@/app/ui/sidebar/Sidebar";
 
 export default function Home() {
   return (
-    <div className="flex flex-col md:flex-row min-h-screen">
+    <div className="flex flex-col md:flex-row w-full h-full">
       <Sidebar />
-      <main className="flex-1">
-        <h1>Bye</h1>
-      </main>
+      <SearchResults />
     </div>
   );
 }
