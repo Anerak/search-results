@@ -4,7 +4,8 @@ import "./ui/globals.css";
 
 const interSans = Inter({
   variable: '--font-inter-sans',
-  subsets: ["latin"]
+  subsets: ["latin"],
+  display: 'swap'
 });
 
 export const metadata: Metadata = {
