@@ -2,6 +2,8 @@ import React from "react";
 import Image from "next/image";
 import { Sailing, SailingProps } from "@/app/models/Sailing";
 import Itinerary from "@/app/ui/results/card/details/itinerary/Itinerary";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faStar } from "@fortawesome/free-solid-svg-icons";
 
 export default function CardDetails(props: SailingProps) {
     const sailing: Sailing = props.sailing;
@@ -11,7 +13,7 @@ export default function CardDetails(props: SailingProps) {
             <div className="flex flex-row px-2 justify-between">
                 <div className="flex flex-col">
                     <span className="text-2xl font-bold p-2 pt-4">{sailing.name}</span>
-                    <div className="flex flex-row px-2 gap-3 text-lg">
+                    <div className="flex md:flex-row flex-col px-2 gap-3 text-lg">
                         <div>
                             <span>{sailing.region}</span>
                         </div>
@@ -19,7 +21,7 @@ export default function CardDetails(props: SailingProps) {
                             <span>{sailing.duration} nights</span>
                         </div>
                         <div className="flex flex-row gap-1 items-center">
-                            <span className="text-black">⭐ {sailing.ship.rating}</span>
+                            <span className="text-black"><FontAwesomeIcon icon={faStar} className="text-yellow-400" /> {sailing.ship.rating}</span>
                             <span className="text-gray-500 text-sm">{sailing.ship.reviews} reviews</span>
                         </div>
                     </div>
@@ -27,14 +29,16 @@ export default function CardDetails(props: SailingProps) {
                         <Itinerary itinerary={sailing.itinerary} />
                     </div>
                 </div>
-                <div className="flex flex-col items-end pr-4">
-                    <Image src={sailing.ship.line.logo ?? '/missing.svg'} alt={`${sailing.ship.line.name} logo`} width={128} height={1} className="max-h-[96px]" />
+                <div className="flex flex-col items-end md:pr-4 p-4">
+                    <div className="min-h-[110px]">
+                        <Image src={sailing.ship.line.logo ?? '/missing.svg'} alt={`${sailing.ship.line.name} logo`} width={128} height={1} className="max-h-[96px]" />
+                    </div>
                     <span className="text-gray-400 text-sm">{sailing.ship.name}</span>
                 </div>
             </div>
             <div className="w-full h-1/3 bg-gray-100 rounded-br-xl flex flex-row items-center justify-end pr-4">
                 <div className="flex flex-col p-2">
-                    <span>Interior from</span>
+                    <span className="text-gray-500">Interior from</span>
                     <div className="flex flex-row items-start justify-end">
                         <span>&#36;</span>
                         <span className="text-2xl font-semibold">{sailing.price}</span>

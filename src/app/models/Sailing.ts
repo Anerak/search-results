@@ -20,6 +20,7 @@ export type Sailing = {
 	region: string;
 	returnDate: string;
 	ship: Ship;
+	[key: string]: unknown;
 };
 
 export type SailingsProps = {
