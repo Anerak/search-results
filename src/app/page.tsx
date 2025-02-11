@@ -6,12 +6,12 @@ import Sidebar from "@/app/ui/sidebar/Sidebar";
 import SearchResults from "@/app/ui/results/SearchResults";
 import { processFilters } from "@/app/utils/utils";
 
-interface HomeProps {
-  searchParams: Record<string, string | string[] | undefined>;
+interface PageProps {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
-export default async function Home({ searchParams }: HomeProps) {
-  const baseSailings = await getSailings(process.env.SAILINGS_API);
+export default async function Home({ searchParams }: PageProps) {
+  const baseSailings = await getSailings(process.env.SAILINGS_API || '');
   const params = await searchParams;
   const sailings = processFilters(baseSailings, params);
 
