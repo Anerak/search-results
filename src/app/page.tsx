@@ -1,14 +1,15 @@
+
 import React from "react";
 
 import { getSailings } from "@/app/data/sailings";
 import Sidebar from "@/app/ui/sidebar/Sidebar";
 import SearchResults from "@/app/ui/results/SearchResults";
 import { processFilters } from "@/app/utils/utils";
-import PageProps from "./models/PageProps";
+import { SearchParams } from "next/dist/server/request/search-params";
 
-export default async function Index(props) {
+export default async function Home({ searchParams }: SearchParams) {
   const baseSailings = await getSailings(process.env.SAILINGS_API);
-  const params: PageProps = await props.searchParams;
+  const params = await searchParams || {};
   const sailings = processFilters(baseSailings, params);
 
   return (

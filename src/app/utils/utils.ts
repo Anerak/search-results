@@ -1,4 +1,4 @@
-import PageProps from '../models/PageProps';
+import { SearchParams } from 'next/dist/server/request/search-params';
 import { Sailing } from '../models/Sailing';
 import { ReadonlyURLSearchParams } from 'next/navigation';
 
@@ -56,7 +56,7 @@ function shortItinerary(itinerary: string[]): string[] {
 	return [...start, middle, ...end];
 }
 
-function processFilters(sailings: Sailing[], params: PageProps): Sailing[] {
+function processFilters(sailings: Sailing[], params: SearchParams): Sailing[] {
 	if (params === undefined) return sailings;
 	let results = sailings;
 
@@ -66,39 +66,49 @@ function processFilters(sailings: Sailing[], params: PageProps): Sailing[] {
 		Object.hasOwn(params, 'departurePort') &&
 		params.hasOwnProperty('departurePort')
 	) {
-		const search: string = params['departurePort'].toLowerCase();
+		const search: string | undefined = params['departurePort']
+			?.toString()
+			.toLowerCase();
 
-		results = results.filter((sailing) => {
-			if (sailing.itinerary.length > 0) {
-				const port = sailing.itinerary[0].toLowerCase();
-				return port.indexOf(search) > -1;
-			}
-			return false;
-		});
+		if (search) {
+			results = results.filter((sailing) => {
+				if (sailing.itinerary.length > 0) {
+					const port = sailing.itinerary[0].toLowerCase();
+					return port.indexOf(search) > -1;
+				}
+				return false;
+			});
+		}
 	}
 
 	if (
 		Object.hasOwn(params, 'shipCruiseline') &&
 		params.hasOwnProperty('shipCruiseline')
 	) {
-		const search: string = params['shipCruiseline'].toLowerCase();
-
-		results = results.filter((sailing) => {
-			if (sailing.itinerary.length > 0) {
-				const shipCruiseline = sailing.ship.line.name.toLowerCase();
-				return shipCruiseline.indexOf(search) > -1;
-			}
-			return false;
-		});
+		const search: string | undefined = params['shipCruiseline']
+			?.toString()
+			.toLowerCase();
+		if (search) {
+			results = results.filter((sailing) => {
+				if (sailing.itinerary.length > 0) {
+					const shipCruiseline = sailing.ship.line.name.toLowerCase();
+					return shipCruiseline.indexOf(search) > -1;
+				}
+				return false;
+			});
+		}
 	}
 
 	if (
 		Object.hasOwn(params, 'departureDate') &&
 		params.hasOwnProperty('departureDate')
 	) {
-		const search: string = params['departureDate'];
-
-		results = results.filter((sailing) => sailing.departureDate === search);
+		const search: string | undefined = params['departureDate']?.toString();
+		if (search) {
+			results = results.filter(
+				(sailing) => sailing.departureDate === search
+			);
+		}
 	}
 
 	return results;
